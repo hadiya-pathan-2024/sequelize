@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Users.hasMany(models.shipping_address,{foreignKey: 'user_id'})
-      Users.hasMany(models.auctions,{foreignKey: 'seller_id'})
-      Users.hasMany(models.products,{foreignKey: 'seller_id'})
-      Users.hasMany(models.orders,{foreignKey: 'buyer_id'})
-      Users.hasMany(models.bids,{foreignKey: 'bidder_id'})
-      Users.hasMany(models.updated_profile_lists, {foreignKey: 'user_id'})
+      Users.hasMany(models.shipping_address)
+      Users.hasMany(models.auctions)
+      Users.hasMany(models.products)
+      Users.hasMany(models.orders)
+      Users.hasMany(models.bids, { as : "bids" })
+      Users.hasMany(models.updated_profile_lists)
     }
   }
   Users.init({

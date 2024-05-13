@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
      bids.belongsTo(models.auctions,{foreignKey: 'auction_id'})
      bids.belongsTo(models.products, {foreignKey: 'product_id'})
-     bids.belongsTo(models.users,{foreignKey: 'bidder_id'})
+     bids.belongsTo(models.Users,{foreignKey: 'bidder_id'})
     }
   }
   bids.init({
