@@ -1,0 +1,21 @@
+{
+  "name": "onlineauction_sequelize",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mig:create": "sequelize migration:create",
+    "db:migrate": "sequelize-cli db:migrate",
+    "model:generate": "sequelize-cli model:generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  },
+  "dependencies": {
+    "sequelize": "^6.37.3"
+  }
+}
