@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     status_id: DataTypes.INTEGER,
     deleted_at: DataTypes.DATE
   }, {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     sequelize,
     modelName: 'auctions',
   });

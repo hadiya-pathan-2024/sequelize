@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Auction Platform</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon1.ico" />
+  <link rel="stylesheet" href="/css/output.css" />
+</head>
+
+<body>
+  <div class="max-w-[1440px] m-auto flex flex-col justify-evenly items-start w-full my-16">
+    <a href="/" class="logo">
+      <img src="/assets/logo1.png" alt="" class="h-12 w-auto" />
+    </a>
+    <div class="w-full flex justify-center mx-auto p-10 my-10 rounded-2xl shadow-2xl">
+      <div class="w-1/2 scale-105 -mt-20">
+        <img src="/assets/auction.svg" alt="registeration" />
+      </div>
+      <div id="container" class="w-1/2 -ml-20 z-20">
+        <h3
+          class="font-semibold text-black-600 py-10 text-4xl border-red-500 w-fit underline underline-offset-[1rem] text-primary">
+          Register
+        </h3>
+        <form id="Register" method="post">
+          <div class="grid grid-cols-1 gap-5 mt-5">
+            <div class="flex flex-col">
+              <input class="bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" name="firstName" placeholder="First Name*" id="firstName" />
+              <span class="errorFirstName hidden"></span>
+            </div>
+            <div class="flex flex-col">
+              <input class="bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" name="lastName" placeholder="Last Name*" id="lastName" />
+              <span class="errorLastName hidden"></span>
+            </div>
+            <div class="flex flex-col">
+              <input class="bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="email" name="email" placeholder="Email*" id="email" />
+              <span class="errorEmail hidden"></span>
+            </div>
+            <div class="flex flex-col">
+              <input type="text" placeholder="Enter DOB" onfocus="(this.type='date')" onblur="(this.type='text')"
+                id="dob" name="dob" class="bg-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline" />
+              <span class="errorDob hidden"></span>
+            </div>
+
+            <div class="p-3 flex gap-2">
+              <input id="bidder" type="radio" name="role" checked value="bidder" />
+              <label for="bidder">Bidder</label>
+              <input id="seller" type="radio" name="role" value="seller" />
+              <label for="seller">Seller</label>
+              <span class="errorRole hidden"></span>
+            </div>
+            <div class="p-3 flex gap-2">
+              <input id="male" type="radio" name="gender" value="male" />
+              <label for="male">Male</label>
+              <input id="female" type="radio" name="gender" value="female" />
+              <label for="female">Female</label>
+              <span class="errorGender hidden"></span>
+            </div>
+          </div>
+        </form>
+        <div class="mt-8 text-center mx-auto flex w-full justify-between">
+          <button
+            class="cursor-pointer text-sm font-bold tracking-wide bg-primary/85 text-gray-100 px-5 p-3 rounded-lg focus:outline-none focus:shadow-outline w-[10rem] z-10"
+            id="loginBtn">
+            Already User ?
+          </button>
+          <button
+            class="cursor-pointer text-sm font-bold tracking-wide bg-primary text-gray-100 px-5 p-3 rounded-lg focus:outline-none focus:shadow-outline w-[10rem]"
+            id="registers">
+            Register
+          </button>
+        </div>
+      </div>
+    </div>
+    <h3 id="al" hidden></h3>
+  </div>
+  <script src="/js/registration.js"></script>
+ 
+</body>
+
+</html>
