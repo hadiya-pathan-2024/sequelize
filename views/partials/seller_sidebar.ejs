@@ -1,0 +1,54 @@
+<div id="sideBar"
+  class="pb-0 shadow-lg  mb-0 sticky top-0 left-0 flex items-center flex-col gap-5 h-screen w-[20%] p-5">
+  <a href="/"> <span class="italic font-bold  text-2xl text-nowrap"><img src="/assets/logo1.png" alt=""
+        srcset=""></span></a>
+  <div class="flex  flex-col gap-5 my-5 w-full text-gray-100">
+
+
+    <span id="dashboard"
+      class="py-3 px-4 active:text-white hover:text-white focus:bg-[#4B49AC] text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer">
+      Dashboard</span>
+
+
+    <span id="live"
+      class="py-3 px-4 active:text-white hover:text-white focus:bg-[#4B49AC] text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer">
+      Live Auctions</span>
+
+    <span id="upcoming"
+      class="py-3 px-4 active:text-white hover:text-white focus:bg-[#4B49AC] text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer">
+      Upcoming Auctions</span>
+
+    <span id="completed"
+      class="py-3 px-4 active:text-white hover:text-white focus:bg-[#4B49AC] text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer">
+      Completed Auctions</span>
+
+    <span class="py-3  px-4  hover:text-white text-[#4B49AC]  hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer "
+      id="auctions">Add
+      Auctions</span>
+    <span
+      class="py-3 px-4  justify-center hover:text-white text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer"
+      id="products">
+      Products</span>
+    <span
+      class="py-3  px-4  justify-center hover:text-white text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer"
+      id="auctionOrders">
+      Orders</span>
+    <span
+      class="relative flex items-center py-3 px-4 gap-5 hover:text-white text-[#4B49AC] hover:bg-[#4B49AC] w-full rounded-lg cursor-pointer"
+      id="user_queries">
+      Query Section
+        <span
+          class="text-center flex items-center justify-center h-6 w-6 rounded-full bg-gray-200 absolute top-3 right-4 text-black text-lg mix-blend-multiply"
+          id="queriesCount">1</span>
+        <div class="p-[0.5rem] bg-gray-500 rounded-full absolute top-4 right-5 animate-ping" id="queriesPing"></div>
+     
+
+    </span>
+    <span
+      class="py-3 px-4 justify-center hover:text-white text-[#4B49AC] hover:bg-red-600 w-full rounded-lg cursor-pointer"
+      id="logout">Logout</span>
+  </div>
+</div>
+<script src="/js/seller_dashboard.js"></script>
+<script src="/js/seller_sidebar.js"></script>
+<script src="/sweetalert2.all.min.js"></script>

@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     image_url: DataTypes.STRING,
     deleted_at: DataTypes.DATE
   }, {
+    deletedAt: 'deleted_at',
     sequelize,
     paranoid: true,
     modelName: 'product_images',

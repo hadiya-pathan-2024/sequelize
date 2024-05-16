@@ -1,0 +1,160 @@
+<header
+  class="antialiased flex items-center justify-center w-full sticky top-0 z-10 bg-[rgba( 255, 255, 255, 0.85 )] backdrop-filter backdrop-blur-lg"
+>
+  <nav
+    class="border-gray-200 py-2.5 max-w-[1440px] mx-auto flex justify-between items-center w-full h-[5rem]"
+  >
+    <a href="/" class="logo">
+      <img src="/assets/logo1.png" alt="" class="h-12 w-auto" />
+    </a>
+    <div class="flex justify-start items-center">
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul
+          class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0"
+        >
+          <li>
+            <a
+              href="/"
+              class="block py-2 px-3 md:bg-transparent md:p-0 text-gray-500 hover:text-gray-900"
+              aria-current="page"
+              id="dashboard"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/bidder/live_auction"
+              class="block py-2 px-3 hover:bg-gray-100 md:hover:bg-transparent md:p-0 text-gray-500 hover:text-gray-900"
+              id="live"
+              >Live Auctions</a
+            >
+          </li>
+          <li>
+            <a
+              href="/bidder/upcoming_auction"
+              class="block py-2 px-3 hover:bg-gray-100 md:hover:bg-transparent md:p-0 text-gray-500 hover:text-gray-900"
+              id="upcoming"
+              >Upcoming Auctions</a
+            >
+          </li>
+          <li>
+            <a
+              href="/bidder/contact_us"
+              class="block py-2 px-3 hover:bg-gray-100 md:hover:bg-transparent md:p-0 text-gray-500 hover:text-gray-900"
+              id="contact"
+              >Contact US</a
+            >
+          </li>
+          <li>
+            <a
+              href="/bidder/orders"
+              id="orders"
+              class="block py-2 px-3 hover:bg-gray-100 md:hover:bg-transparent md:p-0 text-gray-500 hover:text-gray-900"
+              >Orders</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex items-center">
+      <form
+        class="flex items-center max-w-sm mx-auto my-2"
+        action="/bidder/dashboard"
+        method="post"
+      >
+        <div
+          class="flex items-center border border-primary text-gray-900 rounded-full bg-gray-50 pl-0 py-2 pr-4"
+        >
+          <input
+            type="text"
+            id="search-dropdown"
+            name="search"
+            class="rounded-full text-md block w-full pl-5 outline-none"
+            placeholder="Live Auctions..."
+            required
+          />
+          <button type="submit">
+            <%- include("../partials/svgs/search.ejs") %>
+          </button>
+        </div>
+      </form>
+
+      <a
+        href="/bidder/notification"
+        class="relative p-2 m-1 text-gray-500 rounded-lg"
+      >
+        <span
+          class="text-center flex items-center justify-center h-6 w-6 rounded-full bg-gray-200 absolute top-0 right-0 text-black text-lg mix-blend-multiply -z-10"
+          id="notificationCount"
+          >1</span
+        >
+        <div id="notificationPing"
+          class="p-[0.5rem] bg-gray-500 rounded-full absolute top-1 right-1 animate-ping"
+        ></div>
+        <%- include('../partials/svgs/notification.ejs')%>
+      </a>
+
+      <div class="group relative cursor-pointer py-2">
+        <div
+          class="flex items-center justify-between space-x-5 bg-transparent px-4"
+        >
+          <% if(typeof(data)!=="undefined" && data.profile_pic!==null ){ %>
+          <div class="overflow-clip w-10 h-10 rounded-full border shadow-lg">
+            <img
+              class="cursor-pointer w-full h-full menu-hover"
+              src="<%= image_path+data.profile_pic %>"
+              alt="Profile image"
+              onClick=""
+            />
+          </div>
+          <% }else{ %>
+          <img
+            class="cursor-pointer w-10 h-10 rounded-full menu-hover"
+            src="/assets/profile.png"
+            alt="Profile picture"
+            onClick=""
+          />
+          <% } %>
+        </div>
+        <div
+          id=" dropdown"
+          class="invisible overflow-x-hidden z-50 mt-2 absolute bg-white divide-y divide-gray-100 rounded-lg shadow-lg shadow-indigo-400/50 w-44 group-hover:visible"
+        >
+          <ul
+            class="text-sm text-gray-700"
+            aria-labelledby="dropdownDefaultButton"
+          >
+            <li>
+              <a
+                class="block text-base px-4 py-2 hover:bg-indigo-100 hover:scale-x-105 text-slate-600 hover:text-slate-800 rounded-t-lg"
+                href="/profile"
+              >
+                Profile
+              </a>
+            </li>
+            <li>
+              <a
+                class="block text-base px-4 py-2 hover:bg-indigo-100 hover:scale-x-105 text-slate-600 hover:text-slate-800"
+                href="/profile/update/password"
+              >
+                Reset password
+              </a>
+            </li>
+            <li>
+              <a
+                class="block text-base px-4 py-2 hover:bg-red-600 hover:scale-x-105 text-slate-600 hover:text-white rounded-b-lg"
+                id="logout"
+                onclick="logout()"
+              >
+                Log Out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script src="/js/bidder_dashboard.js"></script>
+<script src="/js/notification_count.js"></script>
+<script src="/sweetalert2.all.min.js"></script>

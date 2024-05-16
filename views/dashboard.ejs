@@ -1,11 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bidder Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon1.ico" />
+  <link rel="stylesheet" href="/css/output.css" />
+ 
 </head>
-<body>
-    <h1>Dashboard</h1>
+
+  <body onload="usertime()" class="relative">
+    <%- include('./partials/loader.ejs') %>
+
+    <section id="container" class="blur-xl">
+      <%- include('./partials/navbar.ejs',{}) %>
+      <div
+        class="max-w-[1440px] mx-auto flex flex-col justify-between items-start w-full mb-10"
+      >
+        <% if(liveAuctionData.length>0) {%>
+          <div>
+            <%- include('../partials/h1.ejs',{title:"Live Auctions"})%>
+              <div class="grid grid-cols-3 gap-10 p-10" id="liveauctionlimit">
+                <%- include("../partials/auction_card.ejs",{products:liveAuctionData.slice(0,3),image_path}) %>
+              </div>
+              <div class="flex justify-end w-full">
+                <a href="/bidder/live_auction"
+                  class="flex items-center gap-2 font-medium hover:underline px-5 py-2 bg-primary/80 text-white fill-white rounded-xl m-5 duration-300">View
+                  All
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
+                  </svg>
+                </a>
+              </div>
+          </div>
+      
+
+          <% } else{ %>  
+            <%- include('../partials/h1.ejs',{title:"Live Auctions"})%>
+            <div class="grid grid-cols-3 gap-10 p-10" id="liveauctionlimit">
+              <%- include("../partials/auction_card.ejs",{products:liveAuctionData,image_path}) %>
+            </div>
+            <div class="text-4xl text-center font-bold m-auto my-60" id="nolivemessage">No Live Auction Available</div>
+           
+          
+         <% } %>
+            <% if(upcomingAuctionData.length>0) {%>
+              <div>
+                <%- include('../partials/h1.ejs',{title:"Upcoming Auctions"})%>
+                <div class="grid grid-cols-3 gap-10"  id="upcomingauctionlimit">
+                  <%-include("../partials/auction_card.ejs",{products:upcomingAuctionData.slice(0,3)})%>
+                </div>
+               
+                  <div class="flex justify-end w-full">
+                    <a href="/bidder/upcoming_auction"
+                      class="flex items-center gap-2 font-medium hover:underline px-5 py-2 bg-primary/80 text-white fill-white rounded-xl m-5 duration-300">View
+                      All
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
+                      </svg></a>
+                  </div>
+              </div>
+              <% } else{ %>  
+                <%- include('../partials/h1.ejs',{title:"Upcoming Auctions"})%>
+                <div class="grid grid-cols-3 gap-10"  id="upcomingauctionlimit">
+                  <%-include("../partials/auction_card.ejs",{products:upcomingAuctionData})%>
+                </div>
+                <div class="text-4xl text-center font-bold m-auto my-60" id="noupcomingmessage">No Upcoming Auction Available</div>
+             <% } %>
+
+              <%- include('../partials/footer.ejs')%>
+
+             
+            </section>
+
+  <script src="/js/timeManagement.js"></script>
+  <script src="/js/loader.js"></script>
+  <script src="/sweetalert2.all.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  
+  <script>
+  let socket=io();
+  socket.on("liveauctioncard",(groupByAuctionData)=>{
+    if(document.getElementById("nolivemessage")){
+  let deleteupcomingmessage=document.getElementById("nolivemessage");
+  deleteupcomingmessage.remove();
+}
+let auction=groupByAuctionData[0];
+let imagePath="/assets/images"
+let cardContainer=document.getElementById("liveauctionlimit");
+let card=document.createElement("div");
+card.setAttribute("id",`auction-${auction.id}`)
+card.innerHTML=`<div
+      class="relative flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+      <div
+        class="relative mt-4 overflow-hidden text-white shadow-lg rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40">
+        <img src="${imagePath}/${auction.image}"
+          class="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300" alt="error" />
+  
+      </div>
+      <div class="p-6">
+    <div class="flex items-center justify-between mb-3 ">
+      <div class="font-bold text-3xl mb-1 capitalize text-gray-700 text-justify">
+      ${auction.title}
+      </div>
+    </div>
+    <div class="flex items-center justify-between mb-3 ">
+        <div class="font-bold flex gap-2">Auction By: <p class="font-normal">${auction.name}</p></div>
+      </div>
+      <div class="text-base min-h-[5rem] text-ju">
+          <b>Description:</b>  
+          <p class="min-h-[40px] max-h-[40px] text-sm text-pretty overflow-hidden" style="overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; 
+                            line-clamp: 2; 
+                    -webkit-box-orient: vertical;">
+                    ${auction.auction_description}
+                      
+                    </p>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-3 mt-8 group" >
+          ${auction.images
+            .map((ele, index1) => {
+              if (index1 < 4) {
+                return `<img src="${imagePath}/${ele}" class="rounded-full h-16 w-16 object-contain border border-gray-600/5 bg-gray-600/5 p-1 text-gray-900 transition-colors hover:border-gray-900/10"
+              alt="..." />`;
+              }
+            })
+            .join("")}
+          ${
+            auction.images.length > 5 ?
+            `<span
+              class="flex justify-center items-center rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colo hover:border-gray-900/10 hover:bg-gray-900/10">
+              +${auction.images.length - 4}
+              </span>` : ``
+          }
+      
+      </div>
+    </div>
+    <div class="p-6 pt-3 flex flex-col gap-2">
+        <p class="block font-sans text-base antialiased font-medium leading-relaxed text-gray-700">
+            Start Time: <span class="py-1 inline-block bg-gray-200 rounded-full px-3 text-base font-medium w-fit border" name="startTime">${auction.starting_time.toString()}</span>
+        </p>
+    </div>
+    <div class="p-6 pt-3">
+        <a href="current_bids?id=${auction.id}">
+            <button
+                class="block w-full select-none rounded-lg bg-gray-900 py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button">
+                Details
+            </button>
+        </a>
+    </div>
+</div>`
+
+if(cardContainer.firstElementChild){
+  let cardContainerFirstChild=cardContainer.firstElementChild;
+  let cardContainerlength=cardContainer.children.length;
+  cardContainer.insertBefore(card,cardContainerFirstChild);
+  if(cardContainerlength>4){
+    cardContainer.removeChild(cardContainerFirstChild)
+  }
+
+}
+else{
+  cardContainer.appendChild(card);
+  
+}
+
+
+
+})
+
+socket.on("removeliveauctioncard",(auction_id)=>{
+let cardContainer=document.getElementById("liveauctionlimit");
+   let cardtoberemove=document.getElementById(`auction-${auction_id}`);
+   cardtoberemove.parentNode.removeChild(cardtoberemove);
+});
+
+socket.on("addUpcomingCard",(groupByAuctionData)=>{
+if(document.getElementById("noupcomingmessage")){
+  let deleteupcomingmessage=document.getElementById("noupcomingmessage");
+  deleteupcomingmessage.remove();
+}
+  let auction=groupByAuctionData[0];
+        let imagePath="/assets/images"
+let cardContainer=document.getElementById("upcomingauctionlimit");
+let card=document.createElement("div");
+card.setAttribute("id",`auction-${auction.id}`)
+card.innerHTML=`<div
+      class="relative flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+      <div
+        class="relative mt-4 overflow-hidden text-white shadow-lg rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40">
+        <img src="${imagePath}/${auction.image}"
+          class="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300" alt="error" />
+  
+      </div>
+      <div class="p-6">
+    <div class="flex items-center justify-between mb-3 ">
+      <div class="font-bold text-3xl mb-1 capitalize text-gray-700 text-justify">
+      ${auction.title}
+      </div>
+    </div>
+    <div class="flex items-center justify-between mb-3 ">
+        <div class="font-bold flex gap-2">Auction By: <p class="font-normal">${auction.name}</p></div>
+      </div>
+      <div class="text-base min-h-[5rem] text-ju">
+          <b>Description:</b>  
+          <p class="min-h-[40px] max-h-[40px] text-sm text-pretty overflow-hidden" style="overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; 
+                            line-clamp: 2; 
+                    -webkit-box-orient: vertical;">
+                    ${auction.auction_description}
+                      
+                    </p>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-3 mt-8 group" >
+          ${auction.images
+            .map((ele, index1) => {
+              if (index1 < 4) {
+                return `<img src="${imagePath}/${ele}" class="rounded-full h-16 w-16 object-contain border border-gray-600/5 bg-gray-600/5 p-1 text-gray-900 transition-colors hover:border-gray-900/10"
+              alt="..." />`;
+              }
+            })
+            .join("")}
+          ${
+            auction.images.length > 5 ?
+            `<span
+              class="flex justify-center items-center rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colo hover:border-gray-900/10 hover:bg-gray-900/10">
+              +${auction.images.length - 4}
+              </span>`:``
+          }
+      
+      </div>
+    </div>
+    <div class="p-6 pt-3 flex flex-col gap-2">
+        <p class="block font-sans text-base antialiased font-medium leading-relaxed text-gray-700">
+            Start Time: <span class="py-1 inline-block bg-gray-200 rounded-full px-3 text-base font-medium w-fit border" name="startTime">${auction.starting_time.toString()}</span>
+        </p>
+    </div>
+    <div class="p-6 pt-3">
+        <a href="current_bids?id=${auction.id}">
+            <button
+                class="block w-full select-none rounded-lg bg-gray-900 py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button">
+                Details
+            </button>
+        </a>
+    </div>
+</div>`
+if(cardContainer.firstElementChild){
+  let cardContainerlength=cardContainer.children.length;
+  let cardContainerFirstChild=cardContainer.firstElementChild;
+  cardContainer.insertBefore(card,cardContainerFirstChild);
+  if(cardContainerlength>4){
+    cardContainer.removeChild(cardContainerFirstChild)
+  }
+}
+else{
+  cardContainer.appendChild(card);
+}
+})
+socket.on("removeUpcomingCard",(auction_id)=>{
+  let cardContainer=document.getElementById("upcomingauctionlimit");
+   let cardtoberemove=document.getElementById(`auction-${auction_id}`);
+   cardtoberemove.parentNode.removeChild(cardtoberemove);
+      })
+ 
+ 
+ </script>
 </body>
 </html>

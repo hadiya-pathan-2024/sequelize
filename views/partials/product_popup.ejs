@@ -1,0 +1,73 @@
+<div id="popup-<%=product.id%>" 
+  class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4">
+  <div class="relative my-10 m-auto shadow-xl rounded-md bg-white w-3/4 pb-10">
+    <div class="flex justify-end">
+      <button onclick="closeModal('popup-<%=product.id%>')" type="button"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex items-start">
+      <div class="w-1/5 h-full flex flex-col gap-2 items-center max-h-[90dvh] overflow-y-auto"
+        style="scrollbar-width: none; -ms-overflow-style: none">
+        <% product.images.forEach((image,index1)=>{%>
+          <img
+            class="scrollerProductImage opacity-70 hover:opacity-100 duration-300 hover:border-black cursor-pointer w-28 h-auto object-cover border-2"
+            src="<%=image_path+image%>" alt="error" />
+          <%})%>
+      </div>
+      <div class="relative flex flex-col w-full overflow-hidden rounded-lg border-gray-100 bg-white border px-10 gap-5">
+
+        <div class="flex p-5">
+          <img id="PreviewProduct" class="duration-300 w-[30rem] h-[30rem] object-cover my-5 border"
+            src="/assets/images/art.jpeg" alt="error" id="image" />
+          <div class="flex h-auto">
+            <div id="zoomedImg" class="fixed right-64 top-20 hidden z-2 w-[35rem] h-[35rem]"
+              style="background-image: url('/assets/images/art.jpeg'); background-size: 1800px 1800px; background-repeat: no-repeat;">
+            </div>
+            <div id="fullImagediv"
+              class="w-[30rem] m-2 relative flex items-center justify-center overflow-hidden h-[30rem]">
+              <span id="lence" class="absolute hidden top-0 left-0 w-[100px]  h-[100px] border border-green-500"></span>
+              <img id="fullimg" class="h-full object-cover" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3 my-2">
+          <h5 class="text-3xl font-semibold capitalize text-start">
+            <%=product.product_name%>
+          </h5>
+          <p class="text-justify">
+            <%=product.description%>
+          </p>
+          <div class="flex items-center gap-5">
+            <%- include('../partials/svgs/category.ejs')%>
+              <%=product.category%>
+          </div>
+          <div class="flex items-center gap-5">
+            <%- include('../partials/svgs/condition.ejs')%>
+              <%=product.condition%>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="font-bold text-xl">Specification</div>
+            <% product.parameters.map((ele,index)=>{ %>
+              <span>
+                <span>
+                  <%= index+1 %>
+                </span>
+                <%= ele.parameter_name %>
+                  : <%= ele.parameter_value %>
+              </span>
+              <% })%>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

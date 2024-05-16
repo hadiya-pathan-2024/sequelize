@@ -1,0 +1,65 @@
+<% products.forEach((product)=> {%>
+  <div
+    id="auction-<%=product.id%>"
+    class="relative flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+    <div
+      class="relative mt-4 overflow-hidden text-white shadow-lg rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40">
+      <img src="<%=image_path+product.image%>"
+        class="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300" alt="error" />
+
+    </div>
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-3 ">
+        <div class="font-bold text-3xl mb-1 capitalize text-gray-700 text-justify">
+              <%=product.title%>
+        </div>
+      </div>
+      <div class="flex items-center justify-between mb-3 ">
+        <div class="font-bold flex gap-2">Auction By: <p class="font-normal"><%=product.name%></p></div>
+      </div>
+        <div class="text-base min-h-[5rem] text-ju">
+            <b>Description:</b>  
+            <p class="min-h-[40px] max-h-[40px] text-sm text-pretty overflow-hidden" style="overflow: hidden;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 2; 
+                              line-clamp: 2; 
+                      -webkit-box-orient: vertical;">
+                        <%= product.description%>
+                      </p>
+        </div>
+
+      <div class="inline-flex flex-wrap items-center gap-3 mt-8 group">
+        <% product.images.forEach((image,index)=> {%> <% if(index < 4){%>
+            <img src="<%=image_path+image%>"
+              class="rounded-full h-16 w-16 object-contain border border-gray-600/5 bg-gray-600/5 p-1 text-gray-900 transition-colors hover:border-gray-900/10"
+              alt="..." />
+            <%}%>
+              <%})%>
+                <%if(product.images.length>5){%>
+                  <span
+                    class="flex justify-center items-center rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10">
+                    +<%=product.images.length-4%>
+                  </span>
+                  <%} else {%>
+                    <span></span>
+                  <% } %>
+                     
+          </div>
+      </div>
+      <div class="p-6 pt-3 flex flex-col gap-2">
+          <p class="block font-sans text-base antialiased font-medium leading-relaxed text-gray-700">
+              Start Time: <span class="py-1 inline-block bg-gray-200 rounded-full px-3 text-base font-medium w-fit border" id="startTime" name="startTime"><%=product.starting_time.toLocaleString()%></span>
+          </p>
+      </div>
+      <div class="p-6 pt-3">
+          <a href="current_bids?id=<%=product.id%>">
+              <button
+                  class="block w-full select-none rounded-lg bg-gray-900 py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  type="button">
+                  Details
+              </button>
+          </a>
+      </div>
+  </div>
+
+  <%}) %>

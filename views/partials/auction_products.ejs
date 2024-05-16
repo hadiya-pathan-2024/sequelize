@@ -1,0 +1,122 @@
+<%products.map((product,index)=> {%>
+
+<div class="w-full bg-white border border-gray-200 rounded-lg shadow mb-4">
+  <%let allBids=[]%> <%bids.forEach(bid=> {%>
+  <%if(product.id===bid.product_id){%> <%allBids.push(bid.bid_amount)%> <%}%>
+  <%});%>
+  <div class="flex flex-row items-center py-3 xl:py-7">
+    <div class="flex flex-col flex-wrap justify-evenly w-full">
+      <div class="flex justify-between px-4 items-center">
+        <div class="flex flex-col items-center">
+          <span class="text-lg font-semibold xl:text-xl xl:font-bold">
+            <%= product.product_name.split(/\s/)[0] %>
+          </span>
+          <img
+            src="<%=image_path+product.images[0]%>"
+            alt="..."
+            id="<%=product.id%>"
+            class="w-[100px] h-[100px] xl:w-[150px] xl:h-[150px] shadow-lg rounded-full align-middle border-none p-1 xl:p-3 transition cursor-pointer object-cover"
+            onclick="openModal('popup-<%=product.id%>')"
+          />
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-gray-600 mb-2 text-sm xl:text-base"
+            >Starting Price</span
+          >
+          <span class="text-md xl:text-2xl font-bold text-green-600"
+            >&#8377; <%=product.starting_price%>
+          </span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-gray-600 mb-2 text-sm xl:text-base"
+            >Buy Instantly</span
+          >
+          <span
+            id="buy-instantly-<%=product.id%>"
+            class="text-md xl:text-2xl font-semibold bg-gradient-to-r bg-clip-text text-transparent from-dark-gold via-gold to-dark-gold animate-text"
+            >&#8377; <%=product.reserved_price%></span
+          >
+        </div>
+        <div
+          id="bidders-<%=product.id%>"
+          class="topBids hover:scale-105 duration-300"
+          onclick="showAllBids(this)"
+        >
+          <div class="relative overflow-x-auto">
+            <table
+              class="table-fixed w-60 text-sm text-center text-gray-500 cursor-pointer"
+            >
+              <tr class="bg-white border-b">
+                <th
+                  scope="row"
+                  id="childOne-<%=product.id%>"
+                  class="px-3 py-2 xl:px-6 xl:py-4 xl:font-medium text-gray-900 whitespace-nowrap text-xl"
+                >
+                  <div class="flex justify-center">
+                    <%- include('../partials/svgs/win.ejs')%>
+                  </div>
+                  <div id="childOne-<%=product.id%>-winner">
+                    &#8377; <%=allBids.slice(allBids.length-1)%>
+                  </div>
+                </th>
+              </tr>
+              <tr class="bg-white">
+                <th
+                  scope="row"
+                  id="childTwo-<%=product.id%>"
+                  class="px-3 py-2 xl:px-6 xl:py-4 xl:font-medium text-gray-900 whitespace-nowrap text-lg"
+                >
+                  &#8377; <%=allBids.slice(allBids.length-2,allBids.length-1)%>
+                </th>
+              </tr>
+              <tr class="bg-white border-t">
+                <th
+                  scope="row"
+                  id="childThree-<%=product.id%>"
+                  class="px-3 py-2 xl:px-6 xl:py-4 xl:font-medium text-gray-900 whitespace-nowrap text-base"
+                >
+                  &#8377; <%=allBids.slice(allBids.length-3,allBids.length-2)%>
+                </th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="flex flex-col px-4">
+          <%if(product.winning_bid===null){%>
+          <button
+            type="button"
+            id="bid-<%=product.id%>"
+            value="<%=product.bid_price_interval%>"
+            name="bidbutton"
+            class="bid focus:outline-none text-white bg-green-700 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 opacity-60"
+            disabled
+          >
+            &#8377; <%=product.bid_price_interval%>
+          </button>
+          <a
+            id="buy-now-<%=product.id%>"
+            href="buy-now/<%=product.id%>"
+            class="buy pointer-events-none text-white bg-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center me-2"
+          >
+            <%- include('../partials/svgs/kart.ejs')%> Buy now
+          </a>
+          <%}else{%>
+          <div
+            id="bid-<%=product.id%>"
+            class="text-white bg-green-700 w-[133px] opacity-65 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 text-center cursor-not-allowed"
+          >
+            &#8377; <%=product.bid_price_interval%>
+          </div>
+          <a
+            id="buy-now-<%=product.id%>"
+            class="buy text-white bg-white border-2 border-red-500 cursor-not-allowed font-medium rounded-lg text-lg px-5 py-2.5 inline-flex justify-center items-center me-2"
+          >
+            SOLD
+          </a>
+          <%}%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/product_popup.ejs',{product,index}) %> <%});%>

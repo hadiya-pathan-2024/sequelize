@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     auction_id: DataTypes.INTEGER
   }, {
+    deletedAt: 'deleted_at',
     sequelize,
     modelName: 'previous_auction_images',
   });

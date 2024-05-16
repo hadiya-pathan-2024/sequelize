@@ -59,7 +59,7 @@ async function validateForm() {
     return false;
   }
 
-  window.location.href = "/dashboard"
+  window.location.href = "/login"
   await Data()
 }
 
@@ -79,5 +79,5 @@ registeration.addEventListener("click", () => validateForm());
 
 loginBtn.addEventListener(
   "click",
-  () => (window.location.href = "/auth/login")
+  () => (window.location.href = "/login")
 );

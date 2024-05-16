@@ -11,8 +11,8 @@ const {addUser} = require("./controllers/registration")
 const {shipping_address} = require("./controllers/shipping_address")
 const {auctions_status} = require("./controllers/auctions_status")
 const {auctions} = require("./controllers/auctions")
-
-
+const {loginUser} = require("./controllers/login")
+const {query} = require("./controllers/test")
 app.get('/', (req, res) => {
   console.log('API is running');
 })
@@ -26,6 +26,10 @@ app.get("/auctions", auctions)
 app.get("/dashboard", (req,res)=>{
   res.render("dashboard");
 })
+
+app.get("/query" , query)
+
+app.get("/login" , loginUser)
 app.listen(3000, (req, res) => {
   console.log('server started');
 })

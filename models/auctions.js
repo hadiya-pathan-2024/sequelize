@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       auctions.belongsTo(models.Users,{foreignKey: 'seller_id'})
       auctions.hasOne(models.auctions_status,{foreignKey:'status_id'})
-      auctions.belongsTo(models.products,{foreignKey:'auction_id'})
-      auctions.belongsTo(models.Users,{foreignKey: 'auction_id'})
-      auctions.hasOne(models.orders,{foreignKey: 'auction:id'})
+      auctions.hasMany(models.products,{foreignKey: 'auction_id'})
+      auctions.belongsTo(models.Users,{foreignKey: 'id'})
+      auctions.hasOne(models.orders,{foreignKey: 'auction_id'})
       auctions.hasOne(models.bids,{foreignKey: 'auction_id'})
       auctions.hasMany(models.previous_auction_images,{foreignKey: 'auction_id'})
     }
