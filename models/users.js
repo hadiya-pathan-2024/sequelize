@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Users.hasMany(models.auctions, {foreignKey: 'seller_id'})
       Users.hasMany(models.products)
       Users.hasMany(models.orders)
-      Users.hasMany(models.bids, { as : "bids" })
+      Users.belongsToMany(models.bids, { through: 'user_bids' })
       Users.hasMany(models.updated_profile_lists)
     }
   }

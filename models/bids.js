@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
      bids.belongsTo(models.auctions,{foreignKey: 'auction_id'})
      bids.belongsTo(models.products, {foreignKey: 'product_id'})
-     bids.belongsTo(models.Users,{foreignKey: 'bidder_id'})
+     bids.belongsToMany(models.Users,{through: 'user_bids'})
     }
   }
   bids.init({
@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     bid_amount: DataTypes.INTEGER,
     deleted_at: DataTypes.DATE
   }, {
+    deletedAt: 'deleted_at',
+    updatedAt: "updated_at",
     sequelize,
     paranoid: true,
     modelName: 'bids',

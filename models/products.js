@@ -11,13 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       products.belongsTo(models.auctions,{foreignKey: 'auction_id'})
-      products.hasOne(models.categories,{foreignKey:'category_id'})
+      products.hasOne(models.categories,{foreignKey:'id'})
       products.belongsTo(models.Users,{foreignKey:'seller_id'})
       products.hasMany(models.parameters,{foreignKey: 'product_id'})
       products.hasMany(models.product_images,{foreignKey: 'product_id'})
       products.hasMany(models.bids,{foreignKey: 'product_id'})
       products.hasMany(models.order_items,{foreignKey: 'product_id'})
-
     }
   }
   products.init({
