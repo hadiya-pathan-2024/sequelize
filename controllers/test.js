@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const { Op } = db.Sequelize;
+const { Op } = require("sequelize")
 
 const query = async(req,res)=>{
     // const result = await db.sequelize.models.Users.findAll({
@@ -88,7 +88,20 @@ const query = async(req,res)=>{
     //     }],
     // })
 
-    res.json(ordersSql)
+
+        const result = await db.sequelize.models.Users.findAll({
+                where:{
+                    first_name: {
+                        [Op.like]: 'hadiya%'
+                    },
+                    last_name: {
+                        [Op.like]: 'pathan%'
+                    }
+                }
+        })
+    
+
+    res.json(result)
 }
 
 module.exports = {query}

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
     }
   }
-  Users.init({
+  user_bids.init({
     bidder_id : DataTypes.INTEGER,
     bids_id: DataTypes.INTEGER
   }, {
